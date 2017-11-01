@@ -16,9 +16,13 @@ func contains(arr []string, str string) bool {
 	return false
 }
 
+const (
+	timeout = 1300
+)
+
 func GetUrl(url string) {
 	c := &http.Client{
-		Timeout: 2 * time.Second,
+		Timeout: timeout * time.Millisecond,
 	}
 	resp, err := c.Get(url)
 	if err != nil {
@@ -33,7 +37,7 @@ func GetUrl(url string) {
 
 func GetUrlQuiet(url string) string {
 	c := &http.Client{
-		Timeout: 2 * time.Second,
+		Timeout: timeout * time.Millisecond,
 	}
 	resp, err := c.Get(url)
 	if err != nil {

@@ -40,13 +40,13 @@ func (ss Sensors) ApiRelayCommand(sensorid int, command string) string {
 	}
 
 	if command == "updateall" {
-		go func() { ss.updateStatuses() }()
+		go func() { ss.updateStatuses(true) }()
 		resp := "All Relays statuses update Scheduled !"
 		return resp
 	}
 
 	if command == "update" {
-		status := ss[sid].Url() + "/" + "status"
+		status := ss[sid].Url() //+ "/" + "status"
 		ss[sid].Status = GetUrlQuiet(status)
 		resp := "Relay status up to date !"
 		return resp
@@ -86,7 +86,7 @@ func (rs Relays) ApiRelayCommand(relayid int, command string) string {
 	}
 
 	if command == "updateall" {
-		go func() { rs.updateStatuses() }()
+		go func() { rs.updateStatuses(true) }()
 		resp := "All Relays statuses update Scheduled !"
 		return resp
 	}
@@ -112,9 +112,25 @@ func ApiServer(address string, port string, rs Relays, ss Sensors) {
 
 	// Disable Console Color
 	// gin.DisableConsoleColor()
-	fmt.Println("Launching APIServer...")
-	rs.updateStatuses()
-	rs.list(false)
+	//⬡‣⬢
+	fmt.Println("‣ ⬢ Launching APIServer...")
+	fmt.Println("  ⬡ Updating Relays...")
+	rs.updateStatuses(true)
+	fmt.Println("  ⬡ Updating Sensors...")
+	ss.updateStatuses(true)
+	fmt.Println("‣ ⬢ Endpoints :")
+	fmt.Println("  ⬡ /ping")
+	fmt.Println("  ⬢ /api/v1")
+	fmt.Println("      ⬢ /sensor")
+	fmt.Println("      ⬡ /sensor/updateall")
+	fmt.Println("      ⬢ /relay")
+	fmt.Println("      ⬡ /relay/:id")
+	fmt.Println("      ⬡ /relay/:id/:command")
+	fmt.Println("‣ ⬢ Listing Relays :")
+	rs.list(false, false)
+	fmt.Println("‣ ⬢ Listing Sensors :")
+	ss.list(false, false)
+	fmt.Printf("\n -- [ LISTENING ON %v:%v ] --\n", address, port)
 	gin.SetMode(gin.ReleaseMode)
 
 	r := gin.Default()
@@ -126,6 +142,14 @@ func ApiServer(address string, port string, rs Relays, ss Sensors) {
 
 	v1 := r.Group("/api/v1")
 	{
+
+		v1.GET("/sensor", func(c *gin.Context) {
+			c.IndentedJSON(200, ss)
+		})
+		v1.GET("/sensor/updateall", func(c *gin.Context) {
+			go func() { ss.updateStatuses(true) }()
+			c.IndentedJSON(200, gin.H{"sensors": "all", "command": "updateall", "response": "Scheduled!"})
+		})
 		v1.GET("/relay", func(c *gin.Context) {
 			c.IndentedJSON(200, rs)
 		})

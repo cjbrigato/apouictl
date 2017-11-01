@@ -1,4 +1,0 @@
-#!/bin/bash
-export http_proxy=http://maison.apoui.net:4288/
-
-./apouictl "$@"

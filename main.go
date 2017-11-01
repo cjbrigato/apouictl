@@ -10,7 +10,7 @@ import (
 const version = "0.1"
 
 type args struct {
-	Command string `arg:"positional,help:<on|off|status|list|ulist|apiserver|help>"`
+	Command string `arg:"positional,help:<on|off|status|rlist|slist|rulist|sulist|apiserver|help>"`
 	Relayid int    `arg:"positional,help:<id>"`
 	Verbose bool   `arg:"-v,help:verbosity lego get vel"`
 	Address string `arg:"-a,help:Address for api binding (default 127.0.0.1)"`
@@ -37,7 +37,7 @@ func main() {
 	cli.Port = "9191"
 	arg.MustParse(&cli)
 
-	commands := []string{"on", "off", "status", "list", "ulist", "apiserver", "help"}
+	commands := []string{"on", "off", "status", "rlist", "slist", "rulist", "sulist", "apiserver", "help"}
 
 	cok := contains(commands, cli.Command)
 	if true != cok {
@@ -64,13 +64,21 @@ func main() {
 	}
 	json.Unmarshal(datas, &sensors)
 
-	if cli.Command == "list" {
-		relays.list(false)
+	if cli.Command == "rlist" {
+		relays.list(false, false)
+		return
+	}
+	if cli.Command == "slist" {
+		sensors.list(false, false)
 		return
 	}
 
-	if cli.Command == "ulist" {
-		relays.list(true)
+	if cli.Command == "rulist" {
+		relays.list(true, false)
+		return
+	}
+	if cli.Command == "sulist" {
+		sensors.list(true, false)
 		return
 	}
 
@@ -81,7 +89,7 @@ func main() {
 
 	if cli.Relayid == -1 {
 		arg.MustParse(&cli).WriteHelp(os.Stderr)
-		relays.list(false)
+		relays.list(false, false)
 		return
 	}
 

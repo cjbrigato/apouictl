@@ -56,17 +56,9 @@ func (rs Relays) Command(relayid int, command string) {
 	fmt.Printf("D> Done.\n")
 }
 
-func (rs Relays) list(update bool) {
-	s := spinner.New(spinner.CharSets[11], 100*time.Millisecond)
-
+func (rs Relays) list(update bool, quiet bool) {
 	if update {
-		s.Prefix = "  "
-		s.Color("red")
-		s.Suffix = "  Fetching Statuses..."
-		s.Writer = os.Stderr
-		s.FinalMSG = "  [Statuses up-to-date] \n\n"
-		s.Start()
-
+		rs.updateStatuses(quiet)
 	}
 	table := tablewriter.NewWriter(os.Stdout)
 	table.SetColWidth(160)
@@ -75,20 +67,13 @@ func (rs Relays) list(update bool) {
 	table.SetColMinWidth(2, 30)
 	table.SetColMinWidth(3, 10)
 	table.SetColMinWidth(4, 3)
-
 	table.SetHeader([]string{"ID", "NAME", "DESCRIPTION", "MASTERIP", "[~]"})
 	table.SetCenterSeparator(" ")
 	table.SetColumnSeparator(" ")
 	table.SetRowSeparator("-")
 	table.SetBorders(tablewriter.Border{Left: false, Top: false, Right: false, Bottom: false})
-
 	for _, relay := range rs {
-		if update {
-			status := relay.Url() + "/" + "status"
-			table.Append([]string{strconv.Itoa(relay.ID), relay.Name, relay.Description, relay.Masterip, GetUrlQuiet(status)})
-		} else {
-			table.Append([]string{strconv.Itoa(relay.ID), relay.Name, relay.Description, relay.Masterip, relay.Status})
-		}
+		table.Append([]string{strconv.Itoa(relay.ID), relay.Name, relay.Description, relay.Masterip, relay.Status})
 	}
 	//table.SetFooter([]string{"", "TOTAL", strconv.Itoa(rs.rmax())}) // Add Footer
 	table.SetColumnAlignment([]int{tablewriter.ALIGN_CENTER})
@@ -98,27 +83,27 @@ func (rs Relays) list(update bool) {
 	table.SetHeaderLine(true)
 	table.SetHeaderAlignment(tablewriter.ALIGN_LEFT)
 	table.SetAlignment(tablewriter.ALIGN_LEFT) // Set Alignment
-	if update {
-		s.Stop()
-	}
-	table.Render() // Send output
-
+	table.Render()                             // Send output
 }
 
-func (rs Relays) updateStatuses() {
+func (rs Relays) updateStatuses(quiet bool) {
 	s := spinner.New(spinner.CharSets[11], 100*time.Millisecond)
-	s.Prefix = "  "
-	s.Color("red")
-	s.Suffix = "  Fetching Statuses..."
-	s.Writer = os.Stderr
-	s.FinalMSG = "  [Statuses up-to-date] \n\n"
-	s.Start()
+	if !quiet {
+		s.Prefix = "  "
+		s.Color("red")
+		s.Suffix = "  Fetching Statuses..."
+		s.Writer = os.Stderr
+		s.FinalMSG = "  [Statuses up-to-date] \n\n"
+		s.Start()
+	}
 
 	for i := range rs {
 		status := rs[i].Url() + "/" + "status"
 		rs[i].Status = GetUrlQuiet(status)
 	}
-	s.Stop()
+	if !quiet {
+		s.Stop()
+	}
 }
 
 //////////////////////////////////////////// OLD
