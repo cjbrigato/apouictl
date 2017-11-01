@@ -1,0 +1,52 @@
+   [  
+    {
+      "id" : 1,
+      "name" : "salon.temp.sensor1",
+      "localname" : "temp.sensor1",
+      "place" : "Salon - Meuble Tv",
+      "type"  : "temperature",
+      "masterip" : "192.168.1.18",
+      "description" : "Temperature Salon",
+      "status" : "27.50" 
+      },       
+    {
+      "id" : 2,
+      "name" : "chambre.temp.sensor1",
+      "localname" : "sensor1",
+      "place" : "Chambre - Table de nuit Colin",
+      "type"  : "temperature",
+      "masterip" : "192.168.1.16",
+      "description" : "Temperature Chambre",
+      "status" : "" 
+      },       
+    {
+      "id" : 3,
+      "name" : "salon.humid.sensor1",
+      "localname" : "humid.sensor1",
+      "place" : "Salon - Meuble Tv",
+      "type"  : "humidity",
+      "masterip" : "192.168.1.18",
+      "description" : "Humidite Salon",
+      "status" : "16.90" 
+      },       
+    {
+      "id" : 4,
+      "name" : "chambre.humid.sensor1",
+      "localname" : "sensor1",
+      "place" : "Chambre - Table de nuit Colin",
+      "type"  : "humidity",
+      "masterip" : "192.168.1.16",
+      "description" : "Humidite Chambre",
+      "status" : "" 
+      },       
+    {
+      "id" : 5,
+      "name" : "door.lock.magnet.sensor",
+      "localname" : "sensor",
+      "place" : "Porte d'entree",
+      "type"  : "doorlock",
+      "masterip" : "192.168.1.24",
+      "description" : "Door Lock Status",
+      "status" : "CLOSE" 
+      }
+      ]

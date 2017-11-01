@@ -1,0 +1,65 @@
+[
+   {
+      "masterip" : "192.168.1.42",
+      "place" : "Salon - Canap",
+      "localname" : "relay1",
+      "description" : "Salon - GAUCHE Canap",
+      "status" : "OFF",
+      "id" : 1,
+      "name" : "salon.canap.relay1"
+   },
+   {
+      "status" : "OFF",
+      "description" : "Salon - DROITE Canap",
+      "name" : "salon.canap.relay2",
+      "id" : 2,
+      "localname" : "relay2",
+      "place" : "Salon - Canap",
+      "masterip" : "192.168.1.42"
+   },
+   {
+      "masterip" : "192.168.1.28",
+      "status" : "OFF",
+      "description" : "Chambre - Grande Lumiere",
+      "name" : "chambre.relay1",
+      "id" : 3,
+      "place" : "Chambre - Fond gauche",
+      "localname" : "relay1"
+   },
+   {
+      "masterip" : "192.168.1.28",
+      "description" : "Chambre - Veilleuse Anaïs <3",
+      "status" : "OFF",
+      "name" : "chambre.relay2",
+      "id" : 4,
+      "localname" : "relay2",
+      "place" : "Chambre - arriere-lit"
+   },
+   {
+      "masterip" : "192.168.1.6",
+      "localname" : "relay1",
+      "place" : "Salon - Meuble TV",
+      "id" : 5,
+      "name" : "salon.meubletv.relay1",
+      "status" : "ON",
+      "description" : "TV / Wii / FREEBOX (Combo)"
+   },
+   {
+      "localname" : "relay1",
+      "place" : "Pitiburo - Cote Porte",
+      "description" : "Pitiburo - Cote Porte",
+      "status" : "OFF",
+      "name" : "pitiburo.porte.relay1",
+      "id" : 6,
+      "masterip" : "192.168.1.25"
+   },
+   {
+      "place" : "Chambre - arriere-lit",
+      "localname" : "relay1",
+      "description" : "Chambre - Veilleuse Colin <3",
+      "status" : "OFF",
+      "name" : "chambre.relay3",
+      "id" : 7,
+      "masterip" : "192.168.1.39"
+   }
+]
